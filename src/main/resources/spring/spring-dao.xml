@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="classpath*:jdbc.properties"/>
+
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${driver}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${user}"/>
+        <property name="password" value="${password}" />
+
+        <property name="defaultAutoCommit" value="false"/>
+
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="2000" />
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <!-- 配置全局mybatis配置文件 -->
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <!-- 配置使用别名 -->
+        <property name="typeAliasesPackage" value="org.larry.exercise.entity"/>
+
+        <property name="mapperLocations" value="classpath:mapper/*Mapper.xml"/>
+    </bean>
+
+    <!-- 配置扫描Dao接口包，并自动注入spring容器 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--  为了防止sqlSessionFactory提前被实例化，所以用beanName -->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <!-- 给出扫描的包 -->
+        <property name="basePackage" value="org.larry.exercise.dao" />
+    </bean>
+</beans>
