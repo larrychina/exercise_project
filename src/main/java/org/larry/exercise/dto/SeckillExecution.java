@@ -15,7 +15,7 @@ public class SeckillExecution {
 
     private String stateInfo ;
 
-    //private SeckillEnums state ;
+    private SeckillEnums stateEnum ;
 
     private Long seckillId ;
 
@@ -27,7 +27,14 @@ public class SeckillExecution {
         this.seckillId = seckillId;
     }
 
-    public SeckillExecution(SeckillEnums state,Long seckillId, SuccessKill successKill) {
+    public SeckillExecution(SeckillEnums stateEnum, Long seckillId) {
+        this.stateEnum = stateEnum;
+        this.stateInfo = stateEnum.getStateInfo() ;
+        this.state = stateEnum.getState() ;
+        this.seckillId = seckillId;
+    }
+
+    public SeckillExecution(SeckillEnums state, Long seckillId, SuccessKill successKill) {
         this.state = state.getState();
         this.stateInfo = state.getStateInfo();
         this.seckillId = seckillId;

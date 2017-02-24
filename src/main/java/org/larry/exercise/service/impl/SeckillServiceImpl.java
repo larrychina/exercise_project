@@ -82,13 +82,16 @@ public class SeckillServiceImpl implements SeckillService {
             return new SeckillExecution(SeckillEnums.SUCCESS,seckillId,successKill);
         }catch (ReapeatkillExeception e){
             logger.debug(e.getMessage(),e);
-            throw new SeckillExeception(e.getMessage(),e) ;
+            throw e ;
         }catch (SeckillCloseExeception e){
             logger.debug(e.getMessage(),e);
-            throw new SeckillExeception(e.getMessage(),e) ;
+            throw e ;
+        }catch (SeckillExeception e){
+            logger.debug(e.getMessage(),e);
+            throw e ;
         }catch (Exception e){
             logger.debug(e.getMessage(),e);
-            throw new SeckillExeception(e.getMessage(),e) ;
+            throw new SeckillExeception("seckill inner error，"+e.getMessage(),e) ;
         }
     }
 }
