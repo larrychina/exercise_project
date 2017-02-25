@@ -2,6 +2,7 @@ package org.larry.exercise.service.impl;
 
 import org.larry.exercise.dao.SeckillDao;
 import org.larry.exercise.dao.SuccessKillDao;
+import org.larry.exercise.dao.cache.RedisDao;
 import org.larry.exercise.dto.Exposer;
 import org.larry.exercise.dto.SeckillExecution;
 import org.larry.exercise.entity.Seckill;
@@ -38,6 +39,9 @@ public class SeckillServiceImpl implements SeckillService {
     @Autowired
     private SuccessKillDao successKillDao ;
 
+    @Autowired
+    private RedisDao redisDao ;
+
     public Seckill getById(Long seckillId) {
         return seckillDao.queryById(seckillId);
     }
@@ -47,9 +51,14 @@ public class SeckillServiceImpl implements SeckillService {
     }
 
     public Exposer exportSeckillUrl(Long seckillId) {
-        Seckill seckill = seckillDao.queryById(seckillId) ;
-        if(null == seckill)
-            return new Exposer(false,seckillId) ;
+        Seckill seckill = redisDao.getSeckill(seckillId) ;
+        if(null == seckill){
+            seckill = seckillDao.queryById(seckillId) ;
+            if (seckill == null)
+                return new Exposer(false,seckillId) ;
+            // 放入redis
+            redisDao.putSeckill(seckill) ;
+        }
         Date startTime = seckill.getStartTime() ;
         Date endTime = seckill.getEndTime() ;
         Date now = new Date() ;
