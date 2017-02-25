@@ -25,6 +25,7 @@
                   </property>
               </bean>
             </mvc:message-converters>
+        <!-- 此配置在使用fastJson时候不配置调用返回json时会报406错误 -->
         </mvc:annotation-driven>
 
     <!-- 静态资源的处理 -->
