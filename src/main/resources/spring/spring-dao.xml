@@ -39,7 +39,7 @@
         <property name="basePackage" value="org.larry.exercise.dao" />
     </bean>
 
-    <bean id="redisDao" class="org.larry.exercise.dao.cache.RedisDao">
+   <!-- <bean id="redisDao" class="org.larry.exercise.dao.cache.RedisDao">
         <constructor-arg index="0" value="192.168.10.128" />
         <constructor-arg index="1" value="6379" />
         <constructor-arg index="2" ref="redisConfig" />
@@ -49,5 +49,5 @@
         <property name="minIdle" value="20" />
         <property name="testOnBorrow"  value="true"/>
         <property name="testOnReturn" value="true" />
-    </bean>
+    </bean>-->
 </beans>

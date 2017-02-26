@@ -145,6 +145,14 @@
             <version>2.8.0</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-redis -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
+            <version>1.7.5.RELEASE</version>
+        </dependency>
+
+
         <!-- https://mvnrepository.com/artifact/com.dyuproject.protostuff/protostuff-core -->
         <dependency>
             <groupId>com.dyuproject.protostuff</groupId>

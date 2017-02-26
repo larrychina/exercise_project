@@ -26,6 +26,10 @@ public class RedisDao {
        // jedisPool = new JedisPool(host,port) ;
     }
 
+    public RedisDao(JedisPool jedisPool) {
+        this.jedisPool = jedisPool;
+    }
+
     public RedisDao(){
 
     }
@@ -45,22 +49,19 @@ public class RedisDao {
                     ProtobufIOUtil.mergeFrom(objects,seckill,runtimeSchema);
                     return seckill ;
                 }
-            }catch (Exception e){
-                logger.error(e.getMessage());
-                System.out.println("\n");
-            }
-            finally {
+            }finally {
                 jedisPool.close();
             }
         }catch (Exception e){
+            jedisPool.close();
             logger.info(e.getMessage(),e);
         }
         return null ;
     }
 
     public String putSeckill(Seckill seckill){
-        Jedis jedis = jedisPool.getResource() ;
         try{
+            Jedis jedis = jedisPool.getResource() ;
             String key = "seckill:"+seckill.getSeckillId() ;
             try {
                 // 设置默认长度
@@ -72,6 +73,7 @@ public class RedisDao {
                 jedis.close();
             }
         }catch (Exception e){
+            jedisPool.close();
             logger.info(e.getMessage(),e);
         }
         return  null ;

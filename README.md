@@ -16,20 +16,47 @@ java 问题
 
     1，redirect 和forward问题
 
+        forward 可以把问号和表单中的参数传到forward目标页面，而redirect不行
+
     2，jsp动态包含和静态包含
+
+        静态导入<%@ include file="..jsp" %> 是将被导入的页面与其全部融入，两个页面融合成一个servlet进行编译，被导入的页面不需要一个完整的页面。
+        动态导入<jsp:include page="..jsp"/> 动态导入是两个servlet,两个文件先独立编译再融合
 
 js问题
 
-   1，jquery one方法， on 方法区别？
+    1，jquery one方法，on 方法区别？
+
+        on方法只能对当前存在的元素绑定事件
+        $(document).ready(function () {
+
+            // Sets up click behavior on all button elements with the alert class
+            // that exist in the DOM when the instruction was executed
+            $("button.alert").on("click", function () {
+                console.log("A button with the alert class was clicked!");
+            });
+
+            // Now create a new button element with the alert class. This button
+            // was created after the click listeners were applied above, so it
+            // will not have the same click behavior as its peers
+            $("<button class='alert'>Alert!</button>").appendTo(document.body);
+        });
+        one方法适用于只需要执行一次的handler
+
+        参考文档：http://www.cnblogs.com/mengdd/p/4384232.html
+
+    2，clone方法作用?
+
+        clone方法生成被选元素的副本，复制该元素以及其子元素文本和属性
+        $(selector).clone(isIncludeEvent)
 
 
-   2，clone方法作用?
 
 高并发优化
 
-   1，静态资源部署到CDN上，
+    1，静态资源部署到CDN上，
 
-   2，缓存redis,
+    2，缓存redis,
 
 
 Redis使用过程中的坑？
