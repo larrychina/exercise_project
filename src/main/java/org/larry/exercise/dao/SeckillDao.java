@@ -5,6 +5,7 @@ import org.larry.exercise.entity.Seckill;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Larry on 2017/2/21.
@@ -30,4 +31,6 @@ public interface SeckillDao {
     *query all
     */
     List<Seckill> queryAll(@Param("limit") int limit, @Param("offset") int offset);
+
+    void killProcedure(Map<String,Object> mpas) ;
 }

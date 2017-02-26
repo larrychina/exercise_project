@@ -40,7 +40,14 @@
     </bean>
 
     <bean id="redisDao" class="org.larry.exercise.dao.cache.RedisDao">
-        <constructor-arg index="0" value="localhost" />
+        <constructor-arg index="0" value="192.168.10.128" />
         <constructor-arg index="1" value="6379" />
+        <constructor-arg index="2" ref="redisConfig" />
+    </bean>
+    <bean id = "redisConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxIdle" value="100" />
+        <property name="minIdle" value="20" />
+        <property name="testOnBorrow"  value="true"/>
+        <property name="testOnReturn" value="true" />
     </bean>
 </beans>

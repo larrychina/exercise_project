@@ -3,6 +3,8 @@ owner exercise_project
 
 this project is for exercising seckill_project.
 
+  最近发现网上有这样一个学习的小项目，感觉非常值得学习，在学习的过程中顺便复习一下小的知识点，学习是一个漫长的过程，最重要的就是要坚持下去。
+
 Restful接口设计
 
   1，什么是Restful？

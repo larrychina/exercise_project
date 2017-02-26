@@ -21,6 +21,9 @@ public interface SeckillService {
     // 暴露秒杀接口
     Exposer exportSeckillUrl(Long seckillId) ;
 
-    // 执行秒少操作
+    // java代码执行秒少操作
     SeckillExecution executeSeckill(long seckillId, long userPhone, String md5) throws ReapeatkillExeception,SeckillExeception,SeckillCloseExeception;
+
+    // 存储过程执行秒少操作
+    SeckillExecution executeSeckillByProcedure(long seckillId, long userPhone, String md5) throws ReapeatkillExeception,SeckillExeception,SeckillCloseExeception;
 }

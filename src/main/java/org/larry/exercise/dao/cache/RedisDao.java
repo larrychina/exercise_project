@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
 
 
 /**
@@ -20,8 +21,9 @@ public class RedisDao {
 
     private JedisPool jedisPool  ;
 
-    public RedisDao(String host,int port){
-        jedisPool = new JedisPool(host,port) ;
+    public RedisDao(String host,int port,JedisPoolConfig jedisPoolConfig){
+        jedisPool = new JedisPool(jedisPoolConfig, host, port, 2000);
+       // jedisPool = new JedisPool(host,port) ;
     }
 
     public RedisDao(){
@@ -33,6 +35,7 @@ public class RedisDao {
     public Seckill getSeckill(long seckillId){
         try {
             Jedis jedis = jedisPool.getResource() ;
+           // jedis.auth("123456") ;
             try {
                 String key = "seckill:"+seckillId ;
                 // 使用另一种方式反序列化
@@ -42,7 +45,11 @@ public class RedisDao {
                     ProtobufIOUtil.mergeFrom(objects,seckill,runtimeSchema);
                     return seckill ;
                 }
-            }finally {
+            }catch (Exception e){
+                logger.error(e.getMessage());
+                System.out.println("\n");
+            }
+            finally {
                 jedisPool.close();
             }
         }catch (Exception e){
@@ -52,8 +59,8 @@ public class RedisDao {
     }
 
     public String putSeckill(Seckill seckill){
+        Jedis jedis = jedisPool.getResource() ;
         try{
-            Jedis jedis = jedisPool.getResource() ;
             String key = "seckill:"+seckill.getSeckillId() ;
             try {
                 // 设置默认长度
